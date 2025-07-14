@@ -1,0 +1,176 @@
+/* tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* flat */
+@import '@flaticon/flaticon-uicons/css/all/all.css';
+@import 'flag-icons/css/flag-icons.min.css';
+
+@layer base {
+  :root {
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%
+  }
+
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%
+  }
+}
+
+@layer base {
+  // * {
+  //   @apply border-border outline-ring/50;
+  // }
+  // body {
+  //   @apply bg-background text-foreground;
+  // }
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #14b8a6;
+  /* Teal color */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  // margin-top: -9px;
+  /* Adjust if necessary to align with the track */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #14b8a6;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.ProseMirror:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Custom style for markdown horizontal rule in prose */
+.prose hr {
+  @apply my-8 border-t-2 border-gray-200;
+}
+
+/* Custom animations for login prompts */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(20, 184, 166, 0.6);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(-50px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s ease-out forwards;
+}
+
+/* Login prompt specific styles */
+.login-prompt-gradient {
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%);
+}
+
+.login-prompt-gradient:hover {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
+}
+
+/* Floating action button animations */
+.floating-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 30px rgba(20, 184, 166, 0.4);
+}
+
+/* Card hover effects for non-logged in users */
+.card-login-required {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-login-required::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.card-login-required:hover::before {
+  left: 100%;
+}

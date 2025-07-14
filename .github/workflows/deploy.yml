@@ -1,0 +1,45 @@
+# GitHub Actions workflow to auto-deploy on main branch push
+
+name: Deploy to Remote Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code (not strictly needed for SSH, but good practice)
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install sshpass for password-based SSH
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      # Run git pull on the remote server via SSH
+      - name: SSH and git pull on remote server
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          GIT_USER: ${{ secrets.GIT_USER }}
+          GIT_PASS: ${{ secrets.GIT_PASS }}
+        run: |
+          #!/bin/bash
+          # Connect to remote server and run git pull with credentials
+          sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "
+            cd projects/scrub-hub-front
+            # Set git credentials for this session
+            git config --global credential.helper store
+            echo -e \"https://$GIT_USER:$GIT_PASS@github.com\" > ~/.git-credentials
+            # Pull latest changes
+            git pull
+            # Restart the app using npm script
+            sudo npm run restart
+            # Clean up credentials
+            rm ~/.git-credentials
+          "
